@@ -1,0 +1,28 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns="http://www.w3.org/2000/svg" version="1.1"
+	height="100" width="100">
+	<line x1="0"   y1="0"   x2="50"  y2="50" style="stroke:#000;stroke-width:1" />
+	<line x1="50"  y1="50"  x2="100" y2="0" style="stroke:#000;stroke-width:1" />
+	<line x1="100" y1="0"   x2="50"  y2="100" style="stroke:#000;stroke-width:1" />
+	<line x1="50"  y1="100" x2="0"   y2="0" style="stroke:#000;stroke-width:1" />
+
+	<line x1="0"   y1="100" x2="50"  y2="0" style="stroke:#000;stroke-width:1" />
+	<line x1="50"  y1="0 "  x2="100" y2="100" style="stroke:#000;stroke-width:1" />
+	<line x1="100" y1="100" x2="50"  y2="50" style="stroke:#000;stroke-width:1" />
+	<line x1="50"  y1="50"  x2="0"   y2="100" style="stroke:#000;stroke-width:1" />
+
+	<path id="path_1" d="M 0 0 L 50 50 L 100 0 L 50 100 L 0 0" fill="none" stroke-width="0"/>
+	<path id="path_2" d="M 0 100 L 50 0 L 100 100 L 50 50 L 0 100" fill="none" stroke-width="0"/>
+
+	<circle cx="0" cy="0" r="5" stroke="none" fill="#4080F0" opacity="0.75">
+		<animateMotion dur="5s" id="animation_1" rotate="auto" begin="0.0s" repeatCount="indefinite">
+			<mpath xlink:href="#path_1"/>
+		</animateMotion>
+	</circle>
+
+	<circle cx="0" cy="0" r="5" stroke="none" fill="#4080F0" opacity="0.75">
+		<animateMotion dur="5s" id="animation_1" rotate="auto" begin="0.0s" repeatCount="indefinite">
+			<mpath xlink:href="#path_2"/>
+		</animateMotion>
+	</circle>
+</svg>
