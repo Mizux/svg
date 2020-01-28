@@ -1,26 +1,25 @@
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" width="256" height="256">
-  <defs>
-    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/>
-      <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2" result="diffLight">
-        <feDistantLight azimuth="45" elevation="35"/>
-      </feDiffuseLighting>
-      <feComposite in="SourceGraphic" in2="difflight" operator="arithmetic" k1="1" k2="0" k3="0" k4="0"/>
-    </filter>
+<svg
+  width="256"
+  height="256"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="1.1">
+<defs>
+  <filter id="grain" y="0%" x="0%" height="100%" width="100%">
+    <feTurbulence type="fractalNoise" seed="8" numOctaves="4" baseFrequency="0.064" result="noise"/>
+    <feDiffuseLighting surfaceScale="2" lighting-color="white" in="noise" result="diffLight">
+      <feDistantLight elevation="33" azimuth="45"/>
+    </feDiffuseLighting>
+    <feComposite operator="in" in2="SourceGraphic" result="result3" />
+    <feBlend mode="multiply" in="result3" in2="SourceGraphic" result="result2"/>
+  </filter>
+</defs>
+<rect
+  fill="#552200" filter="url(#grain)"
+  x="0" y="0" width="256" height="256" />
 
-    <circle id="inner" cx="128" cy="128" r="96" fill="white" />
-    <line id="crossbar" x1="32" x2="224" y1="128" y2="128" stroke-width="24" stroke="black"/>
-
-    <filter id="combine" x="0%" y="0%">
-      <feImage xlink:href="#inner" result="innerwhite"/>
-      <feImage xlink:href="#crossbar" result="crossbarthing"/>
-      <feComposite operator="xor" in="SourceGraphic" in2="innerwhite"/>
-      <feComposite operator="over" in2="crossbarthing"/>
-    </filter>
-  </defs>
-
-  <rect x="0" y="0" width="100%" height="100%" fill="white" filter="url(#grain)"/>
-
-  <circle cx="128" cy="128" r="128" fill="black" filter="url(#combine)"/>"
-
+<path
+  style="fill:#008000;stroke:none;stroke-width:5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;filter:url(#grain)"
+  d="M 0,0 H 64 V 64 c 100.271869,66.093035 194.245559,38.983922 256,0 z"
+  />
 </svg>
