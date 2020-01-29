@@ -20,6 +20,6 @@
 
 <path
   style="fill:#008000;stroke:none;stroke-width:5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;filter:url(#grain)"
-  d="M 0,0 V 64 c 100.271869,66.093035 194.245559,38.983922 256,0 V 0 z"
+  d="M 0,0 V 64 c 128,64 192,-64 256,0 V 0 z"
   />
 </svg>
