@@ -1,4 +1,5 @@
 output
 
+gen_*.svg
 *.swp
 .DS_Store
