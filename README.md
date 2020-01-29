@@ -7,7 +7,12 @@ SVG related stuff
 ![paper](https://rawgithub.com/Mizux/svg/master/src/paper.svg)  
 [paper.svg](src/paper.svg)
 
-![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)  
+using `src/stone.svg`  
+![stone](src/stone.svg)
+
+using `https://rawgithub.com/Mizux/svg/master/src/stone.svg`  
+![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)
+
 [stone.svg](src/stone.svg)
 
 note: Github.com does not support well svg filter.  
