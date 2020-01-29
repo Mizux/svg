@@ -12,13 +12,12 @@ class ColorPalette(object):
             ('bg', r'#EA4335'),  # red
             ('fg2', r'#FBBC05'),  # yellow
             ('fg3', r'#34A853'),  # green
-            ('fg4', r'#101010'),  # black
-            ('fg5', r'#FFFFFF'),  # white
+            ('black', r'#101010'),  # black
+            ('white', r'#FFFFFF'),  # white
         ]
 
-        def __getitem__(self, key):
-            """Gets color name from idx."""
-
+    def __getitem__(self, key):
+        """Gets color name from idx."""
         return self._colors[key][0]
 
     def __len__(self):
@@ -143,7 +142,7 @@ class SVGPrinter(object):
         self._args = args
         self._size = size
         self._radius = min(self._size[0], self._size[1]) / 2
-        self._stroke_width = self._size / 64
+        self._stroke_width = self._radius / 32
         # Design variables
         self._color_palette = colors
         self._svg = SVG()
@@ -182,7 +181,7 @@ class SVGPrinter(object):
         """Draws a circle."""
         print(r'<!-- Draw a circle -->')
         color = self._color_palette.value_from_name('black')
-        loc = self._size / 2
+        loc = [self._size[0] / 2, self._size[1] / 2]
         self._svg.draw_circle(loc, self._radius, self._stroke_width, color,
                               'white')
         self._svg.draw_text(r'TNT', loc, self._radius, 'none', color)
@@ -206,7 +205,7 @@ def main():  # pylint: disable=too-many-locals,too-many-branches
                         help='draw 1 circle')
     args = vars(parser.parse_args())
 
-    printer = SVGPrinter(args, data)
+    printer = SVGPrinter(args)
     printer.print_to_console()
     return 0
 
