@@ -13,7 +13,7 @@ RUN yarn global add http-server
 WORKDIR /home/node/app
 # Bundle app source
 COPY *.html ./
-COPY js js/
+COPY js/*.sh js/
 RUN (cd js && ./deps.sh)
 
 EXPOSE 8080
