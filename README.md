@@ -1,24 +1,13 @@
 # SVG
-SVG related stuff
+SVG related stuff...
 
+## Simple animation
 ![graph](src/graph.svg)  
 [graph.svg](src/graph.svg)
 
+## Simple filter effect
 ![paper](https://rawgithub.com/Mizux/svg/master/src/paper.svg)  
 [paper.svg](src/paper.svg)
-
-using `src/stone.svg`  
-![stone](src/stone.svg)
-
-using `https://rawgithub.com/Mizux/svg/master/src/stone.svg`  
-![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)
-
-[stone.svg](src/stone.svg)
-
-note: Github.com does not support well svg filter.  
-e.g. `![stone](src/stone.svg)` won't work,
-**BUT** if you use rawgithub.com (i.e. letting your browser doing the rendering it will work).  
-e.g. `![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)`
 
 # Python
 To generate svg from a python script you can use:
@@ -47,3 +36,15 @@ in one terminal run the server using:
 hs
 ```
 Then in your browser open http://localhost:8080/three.html 
+
+# Troubleshooting MD rendering
+GitHub MD rendering seems borken...
+
+e.g using `![stone](src/stone.svg)` won't work,  
+![stone](src/stone.svg)
+
+**BUT** if you use rawgithub.com  
+e.g. `![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)` 
+![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)
+
+src: [stone.svg](src/stone.svg)
