@@ -17,7 +17,7 @@ To generate svg from a python script you can use:
 This will generate some `src/gen_*.svg` images, then they will be converted to PNG using inkscape...
 
 # Web
-## Install
+## Setup docker
 in your .rc file
 ```sh
 # Install/Configure nodejs, npm, yarn
@@ -26,16 +26,15 @@ export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
 ```
 Then install a simple nodejs server
 ```sh
-npm install -g http-server
-(cd js && ./deps.sh)
+docker build -t svg .
 ```
 
 ## Run
-in one terminal run the server using:
+In one terminal run the server using:
 ```sh
-hs
+docker run --rm --net=host --init --name plop -it svg:latest
 ```
-Then in your browser open http://localhost:8080/three.html 
+Then in your browser open http://localhost:8080
 
 # Troubleshooting MD rendering
 GitHub MD rendering seems borken...
