@@ -44,7 +44,7 @@ e.g using `![stone](src/stone.svg)` won't work,
 ![stone](src/stone.svg)
 
 **BUT** if you use rawgithub.com  
-e.g. `![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)` 
+e.g. `![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)`  
 ![stone](https://rawgithub.com/Mizux/svg/master/src/stone.svg)
 
 src: [stone.svg](src/stone.svg)
