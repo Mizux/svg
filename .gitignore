@@ -1,5 +1,6 @@
 output
 
+js/*.js
 gen_*.svg
 *.swp
 .DS_Store
