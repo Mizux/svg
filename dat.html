@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My first dat.gui.js app</title>
+    <style>
+      body { margin: 0; }
+      canvas { width: 100%; height: 100% }
+    </style>
+  </head>
+  <body>
+    <script src="js/dat.gui.js"></script>
+    <script>
+      var Turbulence = function() {
+        this.seed = 8;
+        this.octave = 2;
+        this.displayOutline = false;
+      };
+
+      var Paper = function() {
+        this.color = '#00ffff';
+        this.maxSize = 64;
+        this.origin = 'europe';
+      };
+
+
+      window.onload = function() {
+        var noise = new Turbulence();
+        var paper = new Paper();
+
+        var gui = new dat.GUI({load: JSON});
+
+        gui.remember(noise);
+        gui.remember(paper);
+
+        var f1 = gui.addFolder('Noise');
+        f1.add(noise, 'seed', 0, 128);
+        f1.add(noise, 'octave', 1, 5, 1); // min, max, step
+        f1.open();
+
+        var f2 = gui.addFolder('Paper');
+        f2.addColor(paper, 'color');
+        f2.add(paper, 'origin', [ 'europe', 'japan', 'usa' ] );
+        f2.add(paper, 'maxSize', 50, 100);
+        f2.open();
+
+      };
+    </script>
+  </body>
+</html>
+
