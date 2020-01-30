@@ -1,0 +1,7 @@
+README.md
+LICENSE
+*.sh
+*.py
+src
+
+output
