@@ -1,13 +1,15 @@
 // Theme struct
 var theme = new Theme();
+var svg = new SVG();
 
 // First define Dat.Gui instances
 var themeGUI = new dat.GUI({ load: JSON });
+var atlasGUI = new dat.GUI({ load: JSON });
 
 // must be call before gui construction
-themeGUI.remember(theme);
-themeGUI.remember(theme.colors);
-themeGUI.remember(theme.filters);
+themeGUI.remember(theme, 'theme');
+themeGUI.remember(theme.colors, 'colors');
+themeGUI.remember(theme.filters, 'filters');
 
 var themeGUI = themeGUI.addFolder("theme");
 {
@@ -18,23 +20,7 @@ var themeGUI = themeGUI.addFolder("theme");
 }
 
 function setTheme() {
-  if (theme.name === "Blade Runner") {
-    theme.colors.fg = "#c0c0c0";
-    theme.colors.color3 = "#E08119"; // dark Cheddar
-    theme.colors.light = "#805c1f";
-    theme.filters.baseFrequency = 0.012;
-    theme.filters.blendMode = "multiply";
-  } else if (theme.name === "Deus Ex") {
-    theme.colors.fg = "#202020";
-    theme.colors.light = "#a0a0a0";
-    theme.filters.baseFrequency = 0.5;
-    theme.filters.blendMode = "multiply";
-  } else if (theme.name === "Tron") {
-    theme.colors.fg = "#000";
-    theme.colors.light = "#f0f0f0";
-    theme.filters.baseFrequency = 0.064;
-  }
-  theme.filters.seed = Math.floor(Math.random() * 9);
+  theme.resetTheme();
   updateGUI(themeGUI, colorPaletteGUI, filterGUI);
   redraw();
 }
@@ -45,6 +31,10 @@ function updateGUI() {
       arguments[i].__controllers[j].updateDisplay();
     }
   }
+}
+
+function redraw() {
+  document.getElementById("main-div").innerHTML = svg.print(theme);
 }
 
 var colorPaletteGUI = themeGUI.addFolder("Color Palette");
@@ -86,71 +76,6 @@ var filterGUI = themeGUI.addFolder("Filters");
     .onChange(redraw);
   filterGUI.open();
 }
-
-// SVG functions
-function redraw() {
-  document.getElementById("main-div").innerHTML = `${svgHeader()}
-<defs>
-  ${printGrainFilter()}
-</defs>
-${drawWalls()}
-${svgFooter()}
-`;
-}
-
-function svgHeader() {
-  return `
-<svg
-  viewBox="0 0 512 512"
-  width="512" height="512"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">`;
-}
-
-function svgFooter() {
-  return `</svg>`;
-}
-
-function printGrainFilter() {
-  return `
-<filter id="grain" x="0%" y="0%" width="100%" height="100%">
-  <feTurbulence
-    type="fractalNoise"
-    seed="${theme.filters.seed}" numOctaves="${theme.filters.numOctaves}"
-    baseFrequency="${theme.filters.baseFrequency}"
-    stitchTiles="stitch"
-    result="noise"
-  />
-  <feDiffuseLighting
-    surfaceScale="2"
-    lighting-color=" ${theme.colors.light} "
-    in="noise"
-    result="diffLight">
-    <feDistantLight elevation="33" azimuth="45"/>
-  </feDiffuseLighting>
-  <feComposite
-    operator="in"
-    in2="SourceGraphic" result="mask"
-  />
-  <feBlend
-    mode="${theme.filters.blendMode}"
-    in="mask" in2="SourceGraphic" result="result"
-  />
-</filter>
-`;
-}
-
-function drawWalls() {
-  return `
-<rect
-  x="0" y="0" width="100%" height="100%"
-  fill=" ${theme.colors.fg} "
-  filter="url(#grain)"
-/>
-`;
-}
-
-//function saveSVG() {}
 
 // Init
 //theme.name = "Deus Ex";
