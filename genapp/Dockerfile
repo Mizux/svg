@@ -12,8 +12,7 @@ RUN yarn global add http-server
 # Create app directory
 WORKDIR /home/node/app
 # Bundle app deps
-COPY js/*.sh js/
-RUN (cd js && ./deps.sh)
+COPY scripts/*.js scripts/
 # Bundle app source
 COPY *.html ./
 
