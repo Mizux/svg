@@ -1,6 +1,11 @@
 # SVG
 SVG related stuff...
 
+# Codemap
+* [src](src): handwritten svg files
+* [genap](genapp): Static Webapp
+* [genpy](genpy): Python generator script
+
 ## Simple animation
 ![graph](src/graph.svg)  
 [graph.svg](src/graph.svg)
@@ -9,14 +14,14 @@ SVG related stuff...
 ![paper](https://rawgithub.com/Mizux/svg/master/src/paper.svg)  
 [paper.svg](src/paper.svg)
 
-# Python
+# Python Generator
 To generate svg from a python script you can use:
 ```sh
 ./generate.sh
 ```
 This will generate some `src/gen_*.svg` images, then they will be converted to PNG using inkscape...
 
-# Web
+# Webapp Generator
 ## Setup docker
 in your .rc file
 ```sh
