@@ -36,6 +36,9 @@ var Theme = function()  {
     theme.filters.seed = Math.floor(Math.random() * 9);
   };
 
+  function getThemeList() {
+  }
+
 
   // Theme Module
   return {
