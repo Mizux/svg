@@ -1,29 +1,7 @@
 // Theme struct
 var theme = new Theme();
+var atlas = new Atlas();
 var svg = new SVG();
-
-// First define Dat.Gui instances
-var themeGUI = new dat.GUI({ load: JSON });
-var atlasGUI = new dat.GUI({ load: JSON });
-
-// must be call before gui construction
-themeGUI.remember(theme, 'theme');
-themeGUI.remember(theme.colors, 'colors');
-themeGUI.remember(theme.filters, 'filters');
-
-var themeGUI = themeGUI.addFolder("theme");
-{
-  themeGUI
-    .add(theme, "name", ["Blade Runner", "Deus Ex", "Tron"])
-    .onChange(setTheme);
-  themeGUI.open();
-}
-
-function setTheme() {
-  theme.resetTheme();
-  updateGUI(themeGUI, colorPaletteGUI, filterGUI);
-  redraw();
-}
 
 function updateGUI() {
   for (i = 0; i < arguments.length; i++) {
@@ -35,6 +13,27 @@ function updateGUI() {
 
 function redraw() {
   document.getElementById("main-div").innerHTML = svg.print(theme);
+}
+
+// First define Dat.Gui instances
+var themeGUI = new dat.GUI({ load: JSON });
+// must be call before gui construction
+themeGUI.remember(theme, 'Theme');
+themeGUI.remember(theme.colors, 'Color Palette');
+themeGUI.remember(theme.filters, 'Filters');
+
+var themeGUI = themeGUI.addFolder("Theme");
+{
+  themeGUI
+    .add(theme, "name", theme.getThemeList())
+    .onChange(setTheme);
+  themeGUI.open();
+}
+
+function setTheme() {
+  theme.resetTheme(theme);
+  updateGUI(themeGUI, colorPaletteGUI, filterGUI);
+  redraw();
 }
 
 var colorPaletteGUI = themeGUI.addFolder("Color Palette");
@@ -77,6 +76,30 @@ var filterGUI = themeGUI.addFolder("Filters");
   filterGUI.open();
 }
 
+var atlasGUI = new dat.GUI({ load: JSON });
+// must be call before gui construction
+atlasGUI.remember(atlas, 'atlas');
+
+var atlasGUI = atlasGUI.addFolder("Atlas");
+{
+  atlasGUI
+    .add(atlas, "name", atlas.getTileList())
+    .onChange(setAtlas);
+  atlasGUI.open();
+}
+
+function setAtlas() {
+  atlas.resetAtlas(atlas);
+  updateGUI(atlasGUI);
+  redraw();
+}
+
+var sizeGUI = atlasGUI.addFolder("Size");
+{
+  sizeGUI.add(atlas.size, "width", 64, 1024, 64).onChange(redraw);
+  sizeGUI.add(atlas.size, "height", 64, 1024, 64).onChange(redraw);
+  sizeGUI.open();
+}
 // Init
 //theme.name = "Deus Ex";
 //setTheme();
