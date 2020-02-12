@@ -53,13 +53,11 @@ var SVG = function() {
   }
 
   function print(theme) {
-    return `${svgHeader(theme)}
-<defs>
-  ${printGrainFilter(theme)}
-</defs>
-      ${drawWalls(theme)}
-    ${svgFooter(theme)}
-`;
+    let svg = `${svgHeader(theme)}`;
+    svg += `<defs>${printGrainFilter(theme)}</defs>`;
+    svg += `${drawWalls(theme)}`;
+    svg += `${svgFooter(theme)}`;
+    return svg;
   }
 
   // SVG Module
