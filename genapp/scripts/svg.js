@@ -1,10 +1,10 @@
 var SVG = function() {
 
-  function svgHeader() {
+  function svgHeader(atlas) {
     return `
 <svg
-  viewBox="0 0 512 512"
-  width="512" height="512"
+  viewBox="0 0 ${atlas.size.width} ${atlas.size.height}"
+  width="${atlas.size.width}" height="${atlas.size.height}"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">`;
   }
@@ -52,8 +52,8 @@ var SVG = function() {
 `;
   }
 
-  function print(theme) {
-    let svg = `${svgHeader(theme)}`;
+  function print(atlas, theme) {
+    let svg = `${svgHeader(atlas)}`;
     svg += `<defs>${printGrainFilter(theme)}</defs>`;
     svg += `${drawWalls(theme)}`;
     svg += `${svgFooter(theme)}`;

@@ -12,7 +12,7 @@ function updateGUI() {
 }
 
 function redraw() {
-  document.getElementById("main-div").innerHTML = svg.print(theme);
+  document.getElementById("main-div").innerHTML = svg.print(atlas, theme);
 }
 
 // First define Dat.Gui instances
