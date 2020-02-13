@@ -130,6 +130,8 @@ function triggerDownload (imgURI) {
 
 btn.addEventListener('click', function () {
   var canvas = document.getElementById('canvas');
+  canvas.setAttribute('width', `${atlas.size.width}`); // clears the canvas
+  canvas.setAttribute('height', `${atlas.size.height}`); // clears the canvas
   var ctx = canvas.getContext('2d');
 
   var svg = document.querySelector('svg');
