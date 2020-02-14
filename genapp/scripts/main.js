@@ -53,26 +53,7 @@ var filterGUI = themeGUI.addFolder("Filters");
   filterGUI.add(theme.filters, "seed", 0, 8).onChange(redraw);
   filterGUI.add(theme.filters, "numOctaves", 2, 8, 1).onChange(redraw);
   filterGUI.add(theme.filters, "baseFrequency", 0.00001, 0.7).onChange(redraw);
-  filterGUI
-    .add(theme.filters, "blendMode", [
-      "color",
-      "color-burn",
-      "color-doge",
-      "darken",
-      "difference",
-      "exclusion",
-      "hard-light",
-      "hue",
-      "lighten",
-      "luminosity",
-      "multiply",
-      "normal",
-      "overlay",
-      "saturation",
-      "screen",
-      "soft-light"
-    ])
-    .onChange(redraw);
+  filterGUI.add(theme.filters, "blendMode", theme.getBlendModeList()).onChange(redraw);
   filterGUI.open();
 }
 

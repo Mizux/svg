@@ -8,6 +8,27 @@ var Theme = function()  {
     ];
   };
 
+  function getBlendModeList() {
+    return [
+      "color",
+      "color-burn",
+      "color-doge",
+      "darken",
+      "difference",
+      "exclusion",
+      "hard-light",
+      "hue",
+      "lighten",
+      "luminosity",
+      "multiply",
+      "normal",
+      "overlay",
+      "saturation",
+      "screen",
+      "soft-light"
+    ];
+  };
+
   const colorParams = {
     fg: "#ffffff", // white
     bg: "#000000", // black
@@ -70,5 +91,6 @@ var Theme = function()  {
     // Public Methods
     resetTheme: resetTheme,
     getThemeList: getThemeList,
+    getBlendModeList: getBlendModeList,
   };
 }
