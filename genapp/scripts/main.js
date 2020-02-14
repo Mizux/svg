@@ -110,9 +110,6 @@ var sizeGUI = atlasGUI.addFolder("Size");
 //update();
 
 // Download button stuff
-var btn = document.querySelector('button');
-//var canvas = document.querySelector('canvas');
-
 function triggerDownload (imgURI) {
   var evt = new MouseEvent('click', {
     view: window,
@@ -128,7 +125,7 @@ function triggerDownload (imgURI) {
   a.dispatchEvent(evt);
 }
 
-btn.addEventListener('click', function () {
+document.querySelector('button').addEventListener('click', function () {
   var canvas = document.getElementById('canvas');
   canvas.setAttribute('width', `${atlas.size.width}`); // clears the canvas
   canvas.setAttribute('height', `${atlas.size.height}`); // clears the canvas
