@@ -106,7 +106,7 @@ function triggerDownload (imgURI) {
   a.dispatchEvent(evt);
 }
 
-document.querySelector('button').addEventListener('click', function () {
+document.getElementById("btn-png").addEventListener('click', function () {
   var canvas = document.getElementById('canvas');
   canvas.setAttribute('width', `${atlas.size.width}`); // clears the canvas
   canvas.setAttribute('height', `${atlas.size.height}`); // clears the canvas
@@ -134,3 +134,25 @@ document.querySelector('button').addEventListener('click', function () {
   img.src = url;
 });
 
+
+document.getElementById("btn-svg").addEventListener('click', function () {
+  const svg = document.querySelector('svg');
+  const data = (new XMLSerializer()).serializeToString(svg);
+  const DOMURL = window.URL || window.webkitURL || window;
+
+  const svgBlob = new Blob([data], {type:"image/svg+xml;charset=utf-8"});
+  const svgUrl = DOMURL.createObjectURL(svgBlob);
+
+  const evt = new MouseEvent('click', {
+    view: window,
+    bubbles: false,
+    cancelable: true
+  });
+
+  const a = document.createElement('a');
+  a.setAttribute('download', `${theme.name}_${atlas.name}.svg`);
+  a.setAttribute('href', svgUrl);
+  a.setAttribute('target', '_blank');
+
+  a.dispatchEvent(evt);
+});
