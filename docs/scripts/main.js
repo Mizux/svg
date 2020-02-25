@@ -53,26 +53,7 @@ var filterGUI = themeGUI.addFolder("Filters");
   filterGUI.add(theme.filters, "seed", 0, 8).onChange(redraw);
   filterGUI.add(theme.filters, "numOctaves", 2, 8, 1).onChange(redraw);
   filterGUI.add(theme.filters, "baseFrequency", 0.00001, 0.7).onChange(redraw);
-  filterGUI
-    .add(theme.filters, "blendMode", [
-      "color",
-      "color-burn",
-      "color-doge",
-      "darken",
-      "difference",
-      "exclusion",
-      "hard-light",
-      "hue",
-      "lighten",
-      "luminosity",
-      "multiply",
-      "normal",
-      "overlay",
-      "saturation",
-      "screen",
-      "soft-light"
-    ])
-    .onChange(redraw);
+  filterGUI.add(theme.filters, "blendMode", theme.getBlendModeList()).onChange(redraw);
   filterGUI.open();
 }
 
@@ -110,9 +91,6 @@ var sizeGUI = atlasGUI.addFolder("Size");
 //update();
 
 // Download button stuff
-var btn = document.querySelector('button');
-//var canvas = document.querySelector('canvas');
-
 function triggerDownload (imgURI) {
   var evt = new MouseEvent('click', {
     view: window,
@@ -128,7 +106,7 @@ function triggerDownload (imgURI) {
   a.dispatchEvent(evt);
 }
 
-btn.addEventListener('click', function () {
+document.getElementById("btn-png").addEventListener('click', function () {
   var canvas = document.getElementById('canvas');
   canvas.setAttribute('width', `${atlas.size.width}`); // clears the canvas
   canvas.setAttribute('height', `${atlas.size.height}`); // clears the canvas
@@ -156,3 +134,25 @@ btn.addEventListener('click', function () {
   img.src = url;
 });
 
+
+document.getElementById("btn-svg").addEventListener('click', function () {
+  const svg = document.querySelector('svg');
+  const data = (new XMLSerializer()).serializeToString(svg);
+  const DOMURL = window.URL || window.webkitURL || window;
+
+  const svgBlob = new Blob([data], {type:"image/svg+xml;charset=utf-8"});
+  const svgUrl = DOMURL.createObjectURL(svgBlob);
+
+  const evt = new MouseEvent('click', {
+    view: window,
+    bubbles: false,
+    cancelable: true
+  });
+
+  const a = document.createElement('a');
+  a.setAttribute('download', `${theme.name}_${atlas.name}.svg`);
+  a.setAttribute('href', svgUrl);
+  a.setAttribute('target', '_blank');
+
+  a.dispatchEvent(evt);
+});
