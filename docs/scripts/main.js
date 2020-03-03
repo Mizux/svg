@@ -1,6 +1,4 @@
-// Theme struct
-var theme = new Theme();
-var atlas = new Atlas();
+// SVG struct
 var svg = new SVG();
 
 function updateGUI() {
@@ -12,83 +10,52 @@ function updateGUI() {
 }
 
 function redraw() {
-  document.getElementById("main-div").innerHTML = svg.print(atlas, theme);
+  document.getElementById("main-div").innerHTML = svg.print();
 }
 
 // First define Dat.Gui instances
-var themeGUI = new dat.GUI({ load: JSON });
+var svgGUI = new dat.GUI({ load: JSON });
 // must be call before gui construction
-themeGUI.remember(theme, 'Theme');
-themeGUI.remember(theme.colors, 'Color Palette');
-themeGUI.remember(theme.filters, 'Filters');
+svgGUI.remember(svg, 'Svg');
+svgGUI.remember(svg.pattern, 'Pattern');
+svgGUI.remember(svg.size, 'Size');
+svgGUI.remember(svg.colors, 'Color Palette');
+svgGUI.remember(svg.filters, 'Filters');
 
-var themeGUI = themeGUI.addFolder("Theme");
+var patternGUI = svgGUI.addFolder("Pattern");
 {
-  themeGUI
-    .add(theme, "name", theme.getThemeList())
-    .onChange(setTheme);
-  themeGUI.open();
+  patternGUI.add(svg, "pattern", svg.getPatternList()).onChange(setPattern);
+  patternGUI.open();
 }
 
-function setTheme() {
-  theme.resetTheme(theme);
-  updateGUI(themeGUI, colorPaletteGUI, filterGUI);
+function setPattern(pattern) {
+  //svg.resetPattern(pattern);
+  updateGUI(sizeGUI, colorPaletteGUI, filterGUI);
   redraw();
 }
 
-var colorPaletteGUI = themeGUI.addFolder("Color Palette");
+var sizeGUI = svgGUI.addFolder("Size");
 {
-  colorPaletteGUI.addColor(theme.colors, "fg").onChange(redraw);
-  colorPaletteGUI.addColor(theme.colors, "bg").onChange(redraw);
-  colorPaletteGUI.addColor(theme.colors, "color0").onChange(redraw);
-  colorPaletteGUI.addColor(theme.colors, "color1").onChange(redraw);
-  colorPaletteGUI.addColor(theme.colors, "color2").onChange(redraw);
-  colorPaletteGUI.addColor(theme.colors, "color3").onChange(redraw);
-  colorPaletteGUI.addColor(theme.colors, "light").onChange(redraw);
+  sizeGUI.add(svg.size, "width", 64, 1024, 64).onChange(redraw);
+  sizeGUI.add(svg.size, "height", 64, 1024, 64).onChange(redraw);
+  sizeGUI.open();
+}
+
+var colorPaletteGUI = svgGUI.addFolder("Color Palette");
+{
+  colorPaletteGUI.addColor(svg.colors, "fg").onChange(redraw);
+  colorPaletteGUI.addColor(svg.colors, "bg").onChange(redraw);
   colorPaletteGUI.open();
 }
 
-var filterGUI = themeGUI.addFolder("Filters");
+var filterGUI = svgGUI.addFolder("Filters");
 {
-  filterGUI.add(theme.filters, "seed", 0, 8).onChange(redraw);
-  filterGUI.add(theme.filters, "numOctaves", 2, 8, 1).onChange(redraw);
-  filterGUI.add(theme.filters, "baseFrequency", 0.00001, 0.7).onChange(redraw);
-  filterGUI.add(theme.filters, "blendMode", theme.getBlendModeList()).onChange(redraw);
+  filterGUI.add(svg.filters, "seed", 0, 8).onChange(redraw);
+  filterGUI.add(svg.filters, "numOctaves", 2, 8, 1).onChange(redraw);
+  filterGUI.add(svg.filters, "baseFrequency", 0.00001, 0.7).onChange(redraw);
+  filterGUI.add(svg.filters, "blendMode", svg.getBlendModeList()).onChange(redraw);
   filterGUI.open();
 }
-
-var atlasGUI = new dat.GUI({ load: JSON });
-// must be call before gui construction
-atlasGUI.remember(atlas, 'atlas');
-
-var atlasGUI = atlasGUI.addFolder("Atlas");
-{
-  atlasGUI
-    .add(atlas, "name", atlas.getTileList())
-    .onChange(setAtlas);
-  atlasGUI.open();
-}
-
-function setAtlas() {
-  atlas.resetAtlas(atlas);
-  updateGUI(atlasGUI);
-  redraw();
-}
-
-var sizeGUI = atlasGUI.addFolder("Size");
-{
-  sizeGUI.add(atlas.size, "width", 64, 1024, 64).onChange(redraw);
-  sizeGUI.add(atlas.size, "height", 64, 1024, 64).onChange(redraw);
-  sizeGUI.open();
-}
-// Init
-//theme.name = "Deus Ex";
-//setTheme();
-//var update = function() {
-//  requestAnimationFrame(update);
-//  redraw();
-//};
-//update();
 
 // Download button stuff
 function triggerDownload (imgURI) {
@@ -99,7 +66,7 @@ function triggerDownload (imgURI) {
   });
 
   var a = document.createElement('a');
-  a.setAttribute('download', `${theme.name}_${atlas.name}.png`);
+  a.setAttribute('download', `${svg.pattern}_${svg.size.width}x${svg.size.height}.png`);
   a.setAttribute('href', imgURI);
   a.setAttribute('target', '_blank');
 
@@ -108,8 +75,8 @@ function triggerDownload (imgURI) {
 
 document.getElementById("btn-png").addEventListener('click', function () {
   var canvas = document.getElementById('canvas');
-  canvas.setAttribute('width', `${atlas.size.width}`); // clears the canvas
-  canvas.setAttribute('height', `${atlas.size.height}`); // clears the canvas
+  canvas.setAttribute('width', `${svg.size.width}`); // clears the canvas
+  canvas.setAttribute('height', `${svg.size.height}`); // clears the canvas
   var ctx = canvas.getContext('2d');
 
   var svg = document.querySelector('svg');
@@ -150,7 +117,7 @@ document.getElementById("btn-svg").addEventListener('click', function () {
   });
 
   const a = document.createElement('a');
-  a.setAttribute('download', `${theme.name}_${atlas.name}.svg`);
+  a.setAttribute('download', `${svg.pattern}_${svg.size.width}x${svg.size.height}.svg`);
   a.setAttribute('href', svgUrl);
   a.setAttribute('target', '_blank');
 
