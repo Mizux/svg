@@ -28,12 +28,12 @@
          values="0"
          result="result4" />
       <feComposite
-         k4="0"
          id="feComposite957"
          result="result2"
-         k3="2"
-         k2="0"
          k1="8"
+         k2="0"
+         k3="2"
+         k4="0"
          operator="arithmetic"
          in2="result4"
          in="SourceGraphic" />
