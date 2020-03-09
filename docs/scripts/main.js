@@ -123,3 +123,5 @@ document.getElementById("btn-svg").addEventListener('click', function () {
 
   a.dispatchEvent(evt);
 });
+
+redraw();
