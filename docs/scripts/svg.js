@@ -1,4 +1,6 @@
 var SVG = function() {
+  const pattern = {name: 'paper'};
+
   const size = {
     width: 512,
     height: 512,
@@ -10,30 +12,47 @@ var SVG = function() {
   };
 
   const filters = {
-    seed: 8,
-    numOctaves: 4,
-    baseFrequency: 0.064,
-    blendMode: "multiply"
-    noise_1: {
-      seed = 0,
-      numOctaves = 1,
-      baseFrequency: 1,
+    paper: {
+      seed: 0,
+      numOctaves: 4,
+      baseFrequency: 0.064,
+      blendMode: "multiply",
+    },
+    wood: {
+      seed: 0,
+      numOctaves: 4,
+      baseFrequency: 0.064,
+      blendMode: "multiply",
+    },
+    noise_one: {
+      seed: 0,
+      numOctaves: 1,
+      baseFrequency: 0.3,
       blendMode: "normal",
-      k1: "2.44",
-      k2: "0.5",
-      k3: "0.5",
-      k4: "-0.15",
+      k1: 2.44,
+      k2: 0.5,
+      k3: 0.5,
+      k4: -0.15,
+    },
+    noise_two: {
+      seed: 0,
+      numOctaves: 1,
+      baseFrequency: 0.3,
+      blendMode: "normal",
+      k1: 8.0,
+      k2: 0.0,
+      k3: 2.0,
+      k4: 0.0,
     },
   };
 
-  const pattern = "paper";
 
   function getPatternList() {
     return [
       "paper",
       "wood",
-      "noise_1",
-      "noise_2",
+      "noise_one",
+      "noise_two",
     ];
   }
 
@@ -71,44 +90,14 @@ var SVG = function() {
     return `</svg>`;
   }
 
-  function printGrainFilter() {
-    return `
-<filter id="grain" x="0%" y="0%" width="100%" height="100%">
-  <feTurbulence
-    type="fractalNoise"
-    seed="${filters.seed}"
-    numOctaves="${filters.numOctaves}"
-    baseFrequency="${filters.baseFrequency}"
-    stitchTiles="stitch"
-    result="noise"
-  />
-  <feDiffuseLighting
-    surfaceScale="2"
-    lighting-color=" ${colors.light} "
-    in="noise"
-    result="diffLight">
-    <feDistantLight elevation="33" azimuth="45"/>
-  </feDiffuseLighting>
-  <feComposite
-    operator="in"
-    in2="SourceGraphic" result="mask"
-  />
-  <feBlend
-    mode="${filters.blendMode}"
-    in="mask" in2="SourceGraphic" result="result"
-  />
-</filter>
-`;
-  }
-
   function printPaperFilter() {
     return `
 <filter id="paper" x="0%" y="0%" width="100%" height="100%">
   <feTurbulence
     type="fractalNoise"
-    seed="${filters.seed}"
-    numOctaves="${filters.numOctaves}"
-    baseFrequency="${filters.baseFrequency}"
+    seed="${filters.paper.seed}"
+    numOctaves="${filters.paper.numOctaves}"
+    baseFrequency="${filters.paper.baseFrequency}"
     stitchTiles="stitch"
     result="noise"
   />
@@ -124,7 +113,7 @@ var SVG = function() {
     in2="SourceGraphic" result="mask"
   />
   <feBlend
-    mode="${filters.blendMode}"
+    mode="${filters.paper.blendMode}"
     in="mask" in2="SourceGraphic" result="result"
   />
 </filter>
@@ -136,9 +125,9 @@ var SVG = function() {
 <filter id="wood" x="0%" y="0%" width="100%" height="100%">
   <feTurbulence
     type="fractalNoise"
-    seed="${filters.seed}"
-    numOctaves="${filters.numOctaves}"
-    baseFrequency="${filters.baseFrequency}"
+    seed="${filters.wood.seed}"
+    numOctaves="${filters.wood.numOctaves}"
+    baseFrequency="${filters.wood.baseFrequency}"
     stitchTiles="stitch"
     result="noise"
   />
@@ -154,7 +143,7 @@ var SVG = function() {
     in2="SourceGraphic" result="mask"
   />
   <feBlend
-    mode="${filters.blendMode}"
+    mode="${filters.wood.blendMode}"
     in="mask" in2="SourceGraphic" result="result"
   />
 </filter>
@@ -163,13 +152,13 @@ var SVG = function() {
 
   function printNoise1Filter() {
     return `
-<filter id="noise_1" x="0%" y="0%" width="100%" height="100%"
+<filter id="noise_one" x="0%" y="0%" width="100%" height="100%"
   style="color-interpolation-filters:sRGB;">
   <feTurbulence
      type="turbulence"
-     seed="${filter.noise_1.seed}"
-     numOctaves="${filters.noise_1.numOctaves}"
-     baseFrequency="${filters.noise_1.baseFrequency}"
+     seed="${filters.noise_one.seed}"
+     numOctaves="${filters.noise_one.numOctaves}"
+     baseFrequency="${filters.noise_one.baseFrequency}"
      stitchTiles="stitch"
      result="noise"
   />
@@ -180,14 +169,14 @@ var SVG = function() {
   />
   <feComposite
      operator="arithmetic"
-     k1="${filter.noise_1.k1}"
-     k2="${filter.noise_1.k2}"
-     k3="${filter.noise_1.k3}"
-     k4="${filter.noise_1.k4}"
+     k1="${filters.noise_one.k1}"
+     k2="${filters.noise_one.k2}"
+     k3="${filters.noise_one.k3}"
+     k4="${filters.noise_one.k4}"
      in="SourceGraphic" in2="ColorMatrix" result="mask"
   />
   <feBlend
-     mode="${filters.noise_1.blendMode}"
+     mode="${filters.noise_one.blendMode}"
      in="mask" in2="SourceGraphic" result="blend"
   />
   <feComposite
@@ -202,13 +191,13 @@ var SVG = function() {
 
   function printNoise2Filter() {
     return `
-<filter id="noise_2" x="0%" y="0%" width="100%" height="100%"
+<filter id="noise_two" x="0%" y="0%" width="100%" height="100%"
   style="color-interpolation-filters:sRGB;">
   <feTurbulence
      type="turbulence"
-     seed="${filter.noise_2.seed}"
-     numOctaves="${filters.noise_2.numOctaves}"
-     baseFrequency="${filters.noise_2.baseFrequency}"
+     seed="${filters.noise_two.seed}"
+     numOctaves="${filters.noise_two.numOctaves}"
+     baseFrequency="${filters.noise_two.baseFrequency}"
      stitchTiles="stitch"
      result="noise"
   />
@@ -219,14 +208,14 @@ var SVG = function() {
   />
   <feComposite
      operator="arithmetic"
-     k1="${filter.noise_2.k1}"
-     k2="${filter.noise_2.k2}"
-     k3="${filter.noise_2.k3}"
-     k4="${filter.noise_2.k4}"
+     k1="${filters.noise_two.k1}"
+     k2="${filters.noise_two.k2}"
+     k3="${filters.noise_two.k3}"
+     k4="${filters.noise_two.k4}"
      in="SourceGraphic" in2="ColorMatrix" result="mask"
   />
   <feBlend
-     mode="${filters.noise_2.blendMode}"
+     mode="${filters.noise_two.blendMode}"
      in="mask" in2="SourceGraphic" result="blend"
   />
   <feComposite
@@ -245,34 +234,34 @@ var SVG = function() {
 <rect
   x="0" y="0" width="100%" height="100%"
   fill=" ${colors.fg} "
-  filter="url(#${pattern})"
+  filter="url(#${pattern.name})"
 />
 `;
   }
 
   function print() {
-    let svg = svgHeader();
-    svg += `<defs>`;
-    switch(pattern) {
+    let res = svgHeader();
+    res += `<defs>`;
+    switch(pattern.name) {
       case 'paper':
-        svg += printPaperFilter();
+        res += printPaperFilter();
         break;
       case 'wood':
-        svg += printWoodFilter();
+        res += printWoodFilter();
         break;
-      case 'noise_1':
-        svg += printNoise1Filter();
+      case 'noise_one':
+        res += printNoise1Filter();
         break;
-      case 'noise_2':
-        svg += printNoise2Filter();
+      case 'noise_two':
+        res += printNoise2Filter();
         break;
       default:
-        console.log('Sorry, pattern \"' + pattern + '\" unknown.');
+        console.log('Sorry, pattern \"' + pattern.name + '\" unknown.');
     }
-    svg += `</defs>`;
-    svg += drawPattern();
-    svg += svgFooter();
-    return svg;
+    res += `</defs>`;
+    res += drawPattern();
+    res += svgFooter();
+    return res;
   }
 
   // SVG Module

@@ -24,11 +24,11 @@ svgGUI.remember(svg.filters, 'Filters');
 
 var patternGUI = svgGUI.addFolder("Pattern");
 {
-  patternGUI.add(svg, "pattern", svg.getPatternList()).onChange(setPattern);
+  patternGUI.add(svg.pattern, "name", svg.getPatternList()).onChange(setPattern);
   patternGUI.open();
 }
 
-function setPattern(pattern) {
+function setPattern() {
   //svg.resetPattern(pattern);
   updateGUI(sizeGUI, colorPaletteGUI, filterGUI);
   redraw();
@@ -50,11 +50,44 @@ var colorPaletteGUI = svgGUI.addFolder("Color Palette");
 
 var filterGUI = svgGUI.addFolder("Filters");
 {
-  filterGUI.add(svg.filters, "seed", 0, 8).onChange(redraw);
-  filterGUI.add(svg.filters, "numOctaves", 2, 8, 1).onChange(redraw);
-  filterGUI.add(svg.filters, "baseFrequency", 0.00001, 0.7).onChange(redraw);
-  filterGUI.add(svg.filters, "blendMode", svg.getBlendModeList()).onChange(redraw);
-  filterGUI.open();
+  var paperGUI = filterGUI.addFolder("Paper");
+  paperGUI.add(svg.filters.paper, "seed", 0, 8).onChange(redraw);
+  paperGUI.add(svg.filters.paper, "numOctaves", 2, 8, 1).onChange(redraw);
+  paperGUI.add(svg.filters.paper, "baseFrequency", 0.00001, 0.7).onChange(redraw);
+  paperGUI.add(svg.filters.paper, "blendMode", svg.getBlendModeList()).onChange(redraw);
+  //paperGUI.open();
+}
+{
+  var woodGUI = filterGUI.addFolder("Wood");
+  woodGUI.add(svg.filters.wood, "seed", 0, 8).onChange(redraw);
+  woodGUI.add(svg.filters.wood, "numOctaves", 2, 8, 1).onChange(redraw);
+  woodGUI.add(svg.filters.wood, "baseFrequency", 0.00001, 0.7).onChange(redraw);
+  woodGUI.add(svg.filters.wood, "blendMode", svg.getBlendModeList()).onChange(redraw);
+  //woodGUI.open();
+}
+{
+  var noise_oneGUI = filterGUI.addFolder("Noise1");
+  noise_oneGUI.add(svg.filters.noise_one, "seed", 0, 8).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "numOctaves", 1, 8, 1).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "baseFrequency", 0.00001, 0.7).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "blendMode", svg.getBlendModeList()).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "k1", -2.5, 2.5, 0.05).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "k2", -2.5, 2.5, 0.05).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "k3", -2.5, 2.5, 0.05).onChange(redraw);
+  noise_oneGUI.add(svg.filters.noise_one, "k4", -2.5, 2.5, 0.05).onChange(redraw);
+  //noise_oneGUI.open();
+}
+{
+  var noise_twoGUI = filterGUI.addFolder("Noise2");
+  noise_twoGUI.add(svg.filters.noise_two, "seed", 0, 8).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "numOctaves", 1, 8, 1).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "baseFrequency", 0.00001, 0.7).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "blendMode", svg.getBlendModeList()).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "k1", -2.5, 2.5, 0.05).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "k2", -2.5, 2.5, 0.05).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "k3", -2.5, 2.5, 0.05).onChange(redraw);
+  noise_twoGUI.add(svg.filters.noise_two, "k4", -2.5, 2.5, 0.05).onChange(redraw);
+  //noise_twoGUI.open();
 }
 
 // Download button stuff
