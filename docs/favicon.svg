@@ -1,0 +1,10 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" height="64" width="64">
+<!--BG White-->
+<rect x="0" y="0" height="100%" width="100%" style="fill: #DDD; stroke: none"/>
+<!--Macaron-->
+<ellipse cx="50%" cy="50%" rx="45%" ry="45%" fill="none" stroke="#000" stroke-width="2%"/>
+<!--SVG-->
+<text x="8" y="40"
+font-family="Verdana" font-size="24"
+fill="black" stroke="black">SVG</text>
+</svg>
