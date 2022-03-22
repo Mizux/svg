@@ -2,7 +2,7 @@ import { default as dat } from "./dat.gui.module.js";
 
 // SVG struct
 import { SVG } from "./svg.js";
-var svg = new SVG(128, 128);
+var svg = new SVG(256, 256);
 var param = { percent: 50 };
 
 function redraw() {
