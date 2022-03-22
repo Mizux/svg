@@ -1,9 +1,9 @@
-import {default as dat} from './dat.gui.module.js';
+import { default as dat } from "./dat.gui.module.js";
 
 // SVG struct
-import {SVG} from "./svg.js";
+import { SVG } from "./svg.js";
 var svg = new SVG(128, 128);
-var param = {percent: 50};
+var param = { percent: 50 };
 
 function redraw() {
   document.getElementById("main-div").innerHTML = svg.print(param.percent);
@@ -12,16 +12,16 @@ function redraw() {
 // First define Dat.Gui instances
 var svgGUI = new dat.GUI({ load: JSON });
 // must be call before gui construction
-svgGUI.remember(svg, 'Svg');
-svgGUI.remember(svg.size, 'Size');
-svgGUI.remember(svg.color, 'Color Palette');
+svgGUI.remember(svg, "Svg");
+svgGUI.remember(svg.size, "Size");
+svgGUI.remember(svg.color, "Color Palette");
 
 svgGUI.add(param, "percent", 0, 100, 1).onChange(redraw);
 
 var sizeGUI = svgGUI.addFolder("Size");
 {
-  sizeGUI.add(svg.size, "width", 0, 512, 64).onChange(redraw);
-  sizeGUI.add(svg.size, "height", 0, 512, 64).onChange(redraw);
+  sizeGUI.add(svg.size, "width", 32, 512, 32).onChange(redraw);
+  sizeGUI.add(svg.size, "height", 32, 512, 32).onChange(redraw);
   sizeGUI.open();
 }
 
@@ -33,34 +33,35 @@ var colorPaletteGUI = svgGUI.addFolder("Color Palette");
 }
 
 // Download button stuff
-function triggerDownload (imgURI) {
-  var evt = new MouseEvent('click', {
+function triggerDownload(imgURI, svg) {
+  var mouse_evt = new MouseEvent("click", {
     view: window,
     bubbles: false,
-    cancelable: true
+    cancelable: true,
   });
 
-  var a = document.createElement('a');
-  a.setAttribute('download', `clock_${svg.size.width}x${svg.size.height}.png`);
-  a.setAttribute('href', imgURI);
-  a.setAttribute('target', '_blank');
+  var a = document.createElement("a");
+  a.setAttribute("download", `clock_${svg.size.width}x${svg.size.height}.png`);
+  a.setAttribute("href", imgURI);
+  a.setAttribute("target", "_blank");
 
-  a.dispatchEvent(evt);
+  a.dispatchEvent(mouse_evt);
 }
 
-document.getElementById("btn-png").addEventListener('click', function () {
-  var canvas = document.getElementById('canvas');
-  console.log({svg});
+document.getElementById("btn-png").param = svg;
+document.getElementById("btn-png").addEventListener("click", function (evt) {
+  var canvas = document.getElementById("canvas");
+  const svg = evt.currentTarget.param;
   canvas.width = svg.size.width; // clears the canvas
   canvas.height = svg.size.height; // clears the canvas
-  var ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext("2d");
 
-  var svg = document.querySelector('svg');
-  var data = (new XMLSerializer()).serializeToString(svg);
+  var svg_obj = document.querySelector("svg");
+  var data = new XMLSerializer().serializeToString(svg_obj);
   var DOMURL = window.URL || window.webkitURL || window;
 
   var img = new Image();
-  var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+  var svgBlob = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
   var url = DOMURL.createObjectURL(svgBlob);
 
   img.onload = function () {
@@ -68,36 +69,37 @@ document.getElementById("btn-png").addEventListener('click', function () {
     DOMURL.revokeObjectURL(url);
 
     var imgURI = canvas
-        .toDataURL('image/png')
-        .replace('image/png', 'image/octet-stream');
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
 
-    triggerDownload(imgURI);
+    triggerDownload(imgURI, svg);
   };
 
   img.src = url;
 });
 
-
-document.getElementById("btn-svg").addEventListener('click', function () {
-  const svg = document.querySelector('svg');
-  const data = (new XMLSerializer()).serializeToString(svg);
+document.getElementById("btn-svg").param = svg;
+document.getElementById("btn-svg").addEventListener("click", function (evt) {
+  const svg = evt.currentTarget.param;
+  const svg_obj = document.querySelector("svg");
+  const data = new XMLSerializer().serializeToString(svg_obj);
   const DOMURL = window.URL || window.webkitURL || window;
 
-  const svgBlob = new Blob([data], {type:"image/svg+xml;charset=utf-8"});
+  const svgBlob = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
   const svgUrl = DOMURL.createObjectURL(svgBlob);
 
-  const evt = new MouseEvent('click', {
+  const mouse_evt = new MouseEvent("click", {
     view: window,
     bubbles: false,
-    cancelable: true
+    cancelable: true,
   });
 
-  const a = document.createElement('a');
-  a.setAttribute('download', `clock_${svg.pattern}_${svg.size.width}x${svg.size.height}.svg`);
-  a.setAttribute('href', svgUrl);
-  a.setAttribute('target', '_blank');
+  const a = document.createElement("a");
+  a.setAttribute("download", `clock_${svg.size.width}x${svg.size.height}.svg`);
+  a.setAttribute("href", svgUrl);
+  a.setAttribute("target", "_blank");
 
-  a.dispatchEvent(evt);
+  a.dispatchEvent(mouse_evt);
 });
 
 redraw();
