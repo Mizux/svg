@@ -1,0 +1,4 @@
+# Project Files unneeded by docker
+.dockerignore
+Dockerfile
+*.sh
