@@ -5,18 +5,10 @@ import { SVG } from "./svg.js";
 const svg = new SVG(256, 256);
 const param = { percent: 50 };
 
-function plop (){
-  return '<svg></svg>'
-}
-
-
 function redraw() {
-  //document.getElementById("main-div").innerHTML = plop();
-  //document.getElementById("main-div").innerText = svg.print(param.percent);
   const node = document.getElementById("main-div")
-  node.replaceChildren();
-  const plop = svg.print(param.percent);
-  node.appendChild(plop);
+  node.replaceChildren(svg.generate(param.percent));
+  //console.log(svg.generate(param.percent))
 }
 
 // First define Dat.Gui instances
