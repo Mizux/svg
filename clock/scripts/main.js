@@ -6,7 +6,7 @@ const svg = new SVG(256, 256);
 const param = { percent: 50 };
 
 function redraw() {
-  const node = document.getElementById("main-div")
+  const node = document.getElementById("main-div");
   node.replaceChildren(svg.generate(param.percent));
   //console.log(svg.generate(param.percent))
 }
@@ -21,25 +21,21 @@ svgGUI.remember(svg.color, "Color Palette");
 svgGUI.add(param, "percent", 0, 100, 1).onChange(redraw);
 
 const sizeGUI = svgGUI.addFolder("Size");
-{
-  sizeGUI.add(svg.size, "width", 32, 512, 32).onChange(redraw);
-  sizeGUI.add(svg.size, "height", 32, 512, 32).onChange(redraw);
-  sizeGUI.open();
-}
+sizeGUI.add(svg.size, "width", 32, 512, 32).onChange(redraw);
+sizeGUI.add(svg.size, "height", 32, 512, 32).onChange(redraw);
+sizeGUI.open();
 
 const colorPaletteGUI = svgGUI.addFolder("Color Palette");
-{
-  colorPaletteGUI.addColor(svg.color, "fg").onChange(redraw);
-  colorPaletteGUI.addColor(svg.color, "bg").onChange(redraw);
-  colorPaletteGUI.open();
-}
+colorPaletteGUI.addColor(svg.color, "fg").onChange(redraw);
+colorPaletteGUI.addColor(svg.color, "bg").onChange(redraw);
+colorPaletteGUI.open();
 
 // Download button stuff
 function triggerDownload(imgURI, svg) {
   const mouse_evt = new MouseEvent("click", {
     view: window,
     bubbles: false,
-    cancelable: true,
+    cancelable: true
   });
 
   const a = document.createElement("a");
@@ -92,7 +88,7 @@ function save_to_svg() {
   const mouse_evt = new MouseEvent("click", {
     view: window,
     bubbles: false,
-    cancelable: true,
+    cancelable: true
   });
 
   const a = document.createElement("a");
