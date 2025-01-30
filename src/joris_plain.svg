@@ -637,7 +637,15 @@
     <path
        d="M 55.9431,10.5334 H 53.616 v 2.27 z"
        fill="#3399ff"
-       id="path184" />
+      id="path184" />
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0 52 10"
+      to="360 52 10"
+      dur="10s"
+      repeatCount="indefinite" />
   </g>
 
   <path id="path_1" d="M 0 0 L 52 34 L 104 0 L 52 69 L 0 0" fill="none" stroke-width="0"/>
